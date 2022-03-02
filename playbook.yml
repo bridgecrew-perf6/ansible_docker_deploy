@@ -1,0 +1,39 @@
+- name: update and upgrade of all packages
+  hosts: first_group
+  become: yes
+  roles:
+  - 01_update_upgrade
+  - 02_auto_updates
+
+
+- name: install and configure docker
+  hosts: first_group
+  become: yes
+  roles:
+  - 03_install-docker
+
+- name: generate ssh-key for github
+  hosts: first_group
+  become: no
+  roles:
+  - 04_ssh-keygen
+  - 05_copy_ssh_key
+
+- name: add created ssh key to github ssh keys 
+  hosts: first_group
+  become: no
+  roles:
+  - 06_add_key_on_gh
+
+- name: clone repos
+  hosts: first_group
+  become: no
+  roles:
+  - 07_clone_repos
+
+- name: up all docker-compose files
+  hosts: first_group
+  become: no
+  roles:
+  - 08_copy_cf_origin_certs
+  - 09_docker-compose-up

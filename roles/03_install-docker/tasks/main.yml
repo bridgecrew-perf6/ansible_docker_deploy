@@ -1,0 +1,75 @@
+---
+# tasks file for roles/install-docker
+- name: Install required system packages for Docker
+  apt: 
+    name: "{{ docker_required_packages }}" 
+    state: latest 
+    update_cache: yes
+  tags:
+    - "main"
+    - "install-docker"
+
+- name: Add Docker GPG key
+  apt_key:
+    url: "{{ docker_gpg_url }}"
+    state: present
+  tags:
+    - "main"
+    - "install-docker"
+
+- name: Add Docker repository for arm64
+  apt_repository:
+    repo: "{{ docker_repo_arm64 }}"
+    state: present
+  tags:
+    - "main"
+    - "install-docker-arm64"
+
+- name: Add Docker repository for x86
+  apt_repository:
+    repo: "{{ docker_repo_x86 }}"
+    state: present
+  tags:
+    - "main"
+    - "install-docker-x86"
+
+- name: Install Docker
+  apt: 
+    name: "{{ docker_packges }}" 
+    state: latest 
+    update_cache: yes
+    force_apt_get: yes
+  tags:
+    - "main"
+    - "install-docker"
+
+- name: "Install docker-compose via pip"
+  pip:
+    name: docker-compose
+  tags:
+    - "main"
+    - "install-docker"
+
+- name: "Configure Docker to start on boot"
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  tags:
+    - "main"
+    - "install-docker"
+
+- name: "Add user {{ target_user }} in group Docker"
+  user:
+    name: "{{ target_user }}"
+    groups: docker
+    append: yes
+  tags:
+    - "main"
+    - "install-docker"
+
+- name: reset ssh connection for applying docker group
+  meta: reset_connection
+  tags:
+    - "main"
+    - "install-docker"

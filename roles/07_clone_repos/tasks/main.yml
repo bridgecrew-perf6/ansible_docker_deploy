@@ -1,0 +1,22 @@
+---
+# tasks file for roles/clone_repos
+
+- name: "Create folder for next step"
+  file:
+    state: directory
+    path: "~/{{ item }}"
+  with_items: "{{ repos_name }}"
+  tags:
+    - "main"
+
+
+- name: Read-write git checkout from github
+  ansible.builtin.git:
+    repo: "git@github.com:{{ github_username }}/{{ item }}.git"
+    dest: "~/{{ item }}"
+    accept_hostkey: yes
+    force: yes
+  with_items: "{{ repos_name }}"
+  tags:
+    - "deploy"
+    - "main"

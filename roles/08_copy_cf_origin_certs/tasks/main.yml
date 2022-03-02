@@ -1,0 +1,20 @@
+---
+# tasks file for roles/copy_cf_origin_certs
+- name: "Create folder for next step"
+  file:
+    state: directory
+    path: "~/certs"
+  tags:
+    - "main"
+
+- name: copy cloudflare origin certificates
+  ansible.builtin.copy:
+    src: "{{ cf_origin_keys_folder_path }}/{{ item }}"
+    dest: "~/certs/{{ item }}"
+    owner: "{{ targer_user }}"
+    group: "{{ target_user }}"
+    mode: '0400'
+    force: yes
+  with_items: "{{ cf_certs_name }}"
+  tags:
+    - "main"

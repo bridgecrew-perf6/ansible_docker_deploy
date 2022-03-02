@@ -1,0 +1,20 @@
+target_user: "" # nom d'utilisateur sur la machine distante
+gh_deploy_key_folder_path: "" # chemin ou stocker la clé d'acces github sur la machine local
+gh_deploy_key_name: "id_rsa" # nom de la clé qui sera générée
+gh_api_token: "" # token Github
+
+
+repo_name: "" # le nom du repo que vous voulez cloner
+
+# le nom des services a lancer
+services: 
+  - traefik
+  - tools
+  - monitoring
+  - tracking
+
+# Optionnel
+cf_origin_keys_folder_path: "" # chemin du dossier ou sont stockés les clés du certificat SSL CloudFlare
+cf_certs_name: 
+  - privkey.pem
+  - cert.pem

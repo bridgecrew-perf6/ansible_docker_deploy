@@ -1,0 +1,7 @@
+---
+# handlers file for roles/auto_updates
+- name: reload_unattended-upgrades
+  ansible.builtin.systemd:
+    name: unattended-upgrades
+    state: restarted
+    enabled: yes

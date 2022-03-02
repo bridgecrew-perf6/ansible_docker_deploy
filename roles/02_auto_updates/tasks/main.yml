@@ -1,0 +1,22 @@
+---
+- name: Install unattended-upgrades for automatic security updates
+  apt:
+    name: "unattended-upgrades"
+    state: latest
+    update_cache: yes
+  tags:
+    - "main"
+
+- name: copy template file for unattended-upgrades
+  ansible.builtin.copy:
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+    force: yes
+  notify: reload_unattended-upgrades
+  tags:
+    - "main"
+
+

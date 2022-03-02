@@ -1,0 +1,8 @@
+---
+- name: Upgrade all packages on server
+  apt: 
+    name: "*"
+    state: latest
+    update_cache: yes
+  tags:
+    - "main"

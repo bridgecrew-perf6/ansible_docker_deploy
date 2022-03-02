@@ -1,0 +1,11 @@
+---
+- name: copy ssh private key to hosts
+  ansible.builtin.copy:
+    src: "{{ gh_deploy_key_folder_path }}{{ gh_deploy_key_name }}"
+    dest: ~/.ssh/id_rsa
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: '0400'
+    force: yes
+  tags:
+    - "main"

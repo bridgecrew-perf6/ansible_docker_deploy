@@ -1,0 +1,3 @@
+---
+# vars file for roles/clone_repos
+github_username: "jerome-karabenli"

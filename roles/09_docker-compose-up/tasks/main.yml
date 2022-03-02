@@ -1,0 +1,10 @@
+---
+# tasks file for roles/docker-compose-up
+- name: docker-compose up
+  community.docker.docker_compose:
+    project_src: "~/{{ repos_name }}/{{ item }}"
+    state: present
+  with_items: "{{ services }}"
+  tags:
+    - "deploy"
+    - "main"

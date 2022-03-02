@@ -1,0 +1,10 @@
+---
+- name: Authorize key with GitHub
+  local_action:
+    module: github_key
+    name: "oci_compute_key"
+    token: '{{ gh_api_token }}'
+    pubkey: "{{ lookup('file', gh_deploy_key_folder_path+gh_deploy_key_name+'.pub') }}"
+    force: yes
+  tags:
+    - "main"

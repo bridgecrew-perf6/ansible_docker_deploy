@@ -1,0 +1,22 @@
+---
+# tasks file for roles/ssh-keygen
+
+- name: "Create folder for next step"
+  file:
+    state: directory
+    path: "{{ gh_deploy_key_folder_path }}"
+  delegate_to: localhost
+  tags:
+    - "main"
+
+- name: "Generate an OpenSSH rsa keypair with a different size (4096 bits) for user {{ target_user }}"
+  community.crypto.openssh_keypair:
+    path: "{{ gh_deploy_key_folder_path }}{{ gh_deploy_key_name }}"
+    type: rsa
+    size: 4096
+    state: present
+    force: no
+  delegate_to: localhost
+  run_once: yes
+  tags:
+    - "main"
