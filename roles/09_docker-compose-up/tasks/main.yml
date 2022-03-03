@@ -6,5 +6,4 @@
     state: present
   with_items: "{{ services }}"
   tags:
-    - "deploy"
     - "main"

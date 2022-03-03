@@ -18,5 +18,4 @@
     force: yes
   with_items: "{{ repos_name }}"
   tags:
-    - "deploy"
     - "main"
